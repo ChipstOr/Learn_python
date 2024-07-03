@@ -1,4 +1,1 @@
-simpel task by product star
-o privet
-hello world
-
+In this git there will be projects made as part of the productstar course
