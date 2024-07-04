@@ -1,8 +1,3 @@
-1. Название проекта
-2. Краткое описание
-3. Как запустить проект(создать venv, активировать venv, установить зависимости, команда для запуска)
-4. Тестирование проекта ( Все Url, так же готовые данные для тестирование, какой запрос отправлять)
-
 ## Простой API блог:
 
 Блог использующий стек Flask и JSON. 
@@ -72,7 +67,7 @@ Press CTRL+C to quit
     - прочитать
     - изменить
     - удалить пост 
-## Endpoints
+
 
 ### Создать: POST /posts 
 
@@ -94,31 +89,85 @@ Press CTRL+C to quit
     "title": "First_post"
     }
 
-### GET /posts
+### Получить все посты: GET /posts
 
-* Retrieves a list of all blog posts.
-* Response: `200 OK` with a list of all posts in JSON format.
+* Получаем список всех сообщений блога.
+* Ответ: `200 OK` список всех постов в JSON формате.
 
-### GET /posts/<int:post_id>
+Пример:
+    http://127.0.0.1:5000/posts
+    Response: `200 OK`
+    BODY:
+    [
+     {
+        "author_id": "Antonio Banderos",
+        "content": "post for first test",
+        "id": 1,
+        "title": "First_post"
+     },
+     {
+        "author_id": "Burak Chelik",
+        "content": "post for second test",
+        "id": 2,
+        "title": "Second_post"
+     }
+    ]
 
-* Retrieves a specific blog post by ID.
-* Response: `200 OK` with the post data if found, or `404 Not Found` if not.
+### Получаем пост по ID : GET /posts/<int:post_id>
 
-### PUT /posts/<int:post_id>
+* Получаем определенный пост по ID
+* Ответ: `200 OK` в случае если нашли пост, или `404 Not Found` если нет.
 
-* Updates a specific blog post by ID.
-* Request body: `{"title": string, "content": string}`.
-* Response: `200 OK` with the updated post data if found, or `404 Not Found` if not.
+Пример:
+    GET http://127.0.0.1:5000/posts/2
+    Response: `200 OK`
+    BODY:
+    {
+        "author_id": "Burak Chelik",
+        "content": "post for second test",
+        "id": 2,
+        "title": "Second_post"
+    }
 
-### DELETE /posts/<int:post_id>
+    GET http://127.0.0.1:5000/posts/3
+    Responce: `404 Not found'`
+    {
+        "error": "Post not found"
+    }
 
-* Deletes a specific blog post by ID.
-* Response: `200 OK` with a success message if found, or `404 Not Found` if not.
 
-## Notes
+### Изменить пост: PUT /posts/<int:post_id>
 
-* This is a simple proof-of-concept API and should not be used in production without additional security measures.
-* The `posts` list is stored in memory, so data is lost when the application restarts.
-* The API uses JSON encoding and decoding to communicate with clients.
+* Изменить пост по ID
+* Привер тела запроса: `{"title": string, "content": string}`.
+* Ответ: `200 OK` если нашли и изменили пост, или `404 Not Found` если нет.
 
-I hope this helps! Let me know if you have any questions or need further clarification.
+Пример:
+    PUT http://127.0.0.1:5000/posts/2
+    BODY:
+        {
+            "title": "Change_Second_post",
+            "content": "post for second test was change"
+        }
+    Response `200 OK`
+    Ответ:
+        {
+            "author_id": "Burak Chelik",
+            "content": "post for second test was change",
+            "id": 2,
+            "title": "Change_Second_post"
+        }
+
+### Удаление поста: DELETE /posts/<int:post_id>
+
+* Удаляем пост по ID
+* Ответ: `200 OK` если нашли и удалили пост, или `404 Not Found` если нет.
+
+Пример:
+
+    DELETE http://127.0.0.1:5000/posts/2
+
+    BODY:
+        {
+            "success": "Post deleted"
+        }
